@@ -12,17 +12,7 @@ const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-//json-server start 假数据
-var jsonServer = require('json-server') //引入文件
-var apiServer = jsonServer.create() //创建服务器
-var apiRouter = jsonServer.router('src/datas/db.json') //引入json 文件 ，这里的地址就是你json文件的地址
-var middlewares = jsonServer.defaults() //返回JSON服务器使用的中间件。
-apiServer.use(middlewares)
-apiServer.use('/api',apiRouter)
-apiServer.listen( 8080 + 1,function(){ //json服务器端口:比如你使用8080,这里的json服务器就是8081端口
-console.log('JSON Server is running')  //json server成功运行会在git bash里面打印出'JSON Server is running'
-})
-//json-server end 假数据
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -38,7 +28,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
-    hot: true,
+    hot: false,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,

@@ -1,45 +1,87 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/containers/Home/Home'
-import Layout from '@/containers/Home/Container'
-import Demo from '@/containers/Home/Demo'
-import Form from '@/containers/Home/Form'
-import Input from '@/containers/Home/Input'
-import Others from '@/containers/Home/Others'
+import Layout from '@/themes/cvue/layout/Index'
 
 Vue.use(Router)
-
-export default new Router({
+// 路由实例
+const router = new Router({
+  scrollBehavior (to, from, savedPosition) { // 路由滚动行为
+    if (savedPosition) {
+        return savedPosition
+    } else {
+        const position = {}
+        if (to.hash) {
+            position.selector = to.hash
+        }
+        if (to.matched.some(m => m.meta.scrollToTop)) {
+            position.x = 0
+            position.y = 0
+        }
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(position)
+            }, 500)
+        })
+    }
+  },
   routes: [
     {
+      path: '/h',
+      name: 'HelloWorld',
+      component: () => import(/* webpackChunkName: "group-foo" */'../components/HelloWorld')
+    },
+    {
+      path: '/index',
+      name: 'Index',
+      component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/layout/Index'),
+      children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/home/Home')
+        }
+      ]
+    },
+    {
+      path: '/button',
+      name: 'Button',
+      component: () => import(/* webpackChunkName: "group-foo" */'../doc/button.md')
+    },
+    {
       path: '/',
-      name: 'Home',
-      component: Home
+      redirect: '/login'
     },
     {
-      path: '/layout',
-      name: 'Layout',
-      component: Layout
+      path: '/login',
+      name: 'Login',
+      component: () => import(/* webpackChunkName: "group-foo" */'../themes/login/Login')
     },
     {
-      path: '/demo',
-      name: 'Demo',
-      component: Demo
+      path: '*',
+      redirect: '/error/404'
     },
     {
-      path: '/form',
-      name: 'Form',
-      component: Form
+      path: '/error/403',
+      name: 'Error403',
+      component: () => import(/* webpackChunkName: "group-foo" */'../themes/error/403')
     },
     {
-      path: '/input',
-      name: 'Input',
-      component: Input
+      path: '/error/404',
+      name: 'Error404',
+      component: () => import(/* webpackChunkName: "group-foo" */'../themes/error/404')
     },
     {
-      path: '/others',
-      name: 'Others',
-      component: Others
+      path: '/item',
+      name: 'Item',
+      component: Layout,
+      children: [
+        {
+          path: 'page',
+          name: 'Page',
+          component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Page')
+        }
+      ]
     }
   ]
 })
+export default router
