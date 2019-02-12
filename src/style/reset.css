@@ -67,6 +67,30 @@ textarea {
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color:#999;
 }
+::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: hsla(220, 4%, 58%, .3);
+}
+::-ms-scrollbar-track-piece {
+    background-color: transparent;
+}
+::-ms-scrollbar {
+    width: 7px;
+    height: 7px;
+    background-color: transparent;
+}
+::-ms-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: hsla(220, 4%, 58%, .3);
+}
 /*清除浮动*/
 .clearfix:after{
     content: "";
