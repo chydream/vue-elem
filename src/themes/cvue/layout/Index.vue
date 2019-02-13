@@ -38,6 +38,8 @@ export default {
   created () {
   },
   mounted () {
+    // console.log(this.role)
+    // console.log(this.userInfo)
   },
   watch: {
     '$route' (to, from) {
@@ -47,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['token', 'keepAlive'])
+    ...mapGetters(['token', 'keepAlive', 'role', 'userInfo'])
   },
   methods: {
    

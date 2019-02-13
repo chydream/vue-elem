@@ -53,9 +53,12 @@ export default {
         password: this.password
       }
       this.$store.dispatch('user/Login', params).then(res => {
-        // console.log(res)
         if (res.success) {
-          this.$router.push('/index/home')
+          this.$store.dispatch('user/GetUserInfo', res.data.token).then(res => {
+            if (res.success) {
+              this.$router.push('/index/home')
+            }
+          })
         } else {
           this.$message({
             message: res.message,

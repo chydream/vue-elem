@@ -5,11 +5,11 @@
         </div>
         <div class="header-right">
             <el-tooltip class="item" effect="dark" content="头像" placement="bottom">
-                <img class="top-userImg" src="../../../assets/6.jpg">
+                <img class="top-userImg" :src="userInfo.pic">
             </el-tooltip>
             <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
-                    admin<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item><a href="https://github.com/chydream/vue-elem" target="_blank">Git地址</a></el-dropdown-item>
@@ -46,7 +46,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isFullScreen'])
+        ...mapGetters(['isFullScreen', 'userInfo'])
     }
 }
 </script>

@@ -4,11 +4,23 @@ Mock.setup({
 })
 let user = Mock.mock({
     account: [
-        {username: 'admin', password: '123456'}
+        {username: 'admin', password: '123456'},
+        {username: 'user', password: '123456'}
     ]
 })
 
 Mock.mock(/\/user\/login/, 'post', user)
+
+let userInfo = Mock.mock({
+    userInfo: {
+        role: ['admin'],
+        userAccount: 'chenyong',
+        userName: '陈勇',
+        userId: '1826',
+        pic: '/static/img/6.jpg'
+    }
+})
+Mock.mock(/\/user\/userInfo/, 'post', userInfo)
 
 let purchaseContract = Mock.mock({
     'list|5': [{

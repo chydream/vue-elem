@@ -1,12 +1,12 @@
-import {login, getMenu, logout} from '@/api/userApi'
+import {login, getMenu, logout, getUserInfo} from '@/api/userApi'
 const user = {
     namespaced: true,
     state: {
-        userInfo: {},
-        permission: {},
-        roles: {},
+        userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {},
+        role: JSON.parse(sessionStorage.getItem('role')) || [],
         token: sessionStorage.getItem('token') || '',
-        menu: []
+        menu: [],
+        permission: {}
     },
     getters: {},
     mutations: {
@@ -16,6 +16,14 @@ const user = {
         },
         SET_MENU: (state, params) => {
             state.menu = params
+        },
+        SET_ROLE: (state, params) => {
+            state.role = params
+            sessionStorage.setItem('role', JSON.stringify(params))
+        },
+        SET_USER_INFO: (state, params) => {
+            state.userInfo = params
+            sessionStorage.setItem('userInfo', JSON.stringify(params))
         }
     },
     actions: {
@@ -31,13 +39,25 @@ const user = {
             return new Promise((resolve, reject) => {
                 logout(params).then(res => {
                     commit('SET_TOKEN', '')
+                    commit('SET_ROLE', [])
+                    commit('SET_USER_INFO', {})
+                    resolve(res)
+                })
+            })
+        },
+        GetUserInfo ({state, commit, dispatch}, params) {
+            return new Promise((resolve, reject) => {
+                getUserInfo(params).then(res => {
+                    commit('SET_ROLE', res.data.role)
+                    commit('SET_USER_INFO', res.data)
                     resolve(res)
                 })
             })
         },
         GetMenu ({state, commit, dispatch}, params) {
             return new Promise((resolve, reject) => {
-                getMenu(params).then(res => {
+                var role = state.role.length > 0 ? state.role[0] : ''
+                getMenu(role).then(res => {
                     commit('SET_MENU', res.data)
                     resolve(res)
                 })
