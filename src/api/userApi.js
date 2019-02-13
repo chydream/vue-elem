@@ -19,7 +19,17 @@ export const login = (params) => {
         })
     })
 }
-
+export const logout = (params) => {
+    return new Promise((resolve, reject) => {
+        axios({
+            url: baseUrl + '/user/login',
+            method: 'post',
+            data: qs.stringify(params)
+        }).then(res => {
+            resolve({message: '登出成功', success: true})
+        })
+    })
+}
 export const getMenu = (params) => {
     return new Promise((resolve, reject) => {
         axios({

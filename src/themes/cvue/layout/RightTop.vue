@@ -4,9 +4,18 @@
             <i class="fa fa-navicon" @click="toggleCollapse"></i>
         </div>
         <div class="header-right">
-            <el-tooltip class="item" effect="dark" content="首页" placement="bottom">
-                <el-button>上左</el-button>
+            <el-tooltip class="item" effect="dark" content="头像" placement="bottom">
+                <img class="top-userImg" src="../../../assets/6.jpg">
             </el-tooltip>
+            <el-dropdown trigger="click">
+                <span class="el-dropdown-link">
+                    admin<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item><a href="https://github.com/chydream/vue-elem" target="_blank">Git地址</a></el-dropdown-item>
+                    <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </div> 
 </template>
@@ -22,6 +31,18 @@ export default {
     methods: {
         toggleCollapse () {
             this.$store.commit('common/SET_COLLAPSE')
+        },
+        logout () {
+            this.$store.dispatch('user/Logout').then(res => {
+                if (res.success) {
+                    this.$router.push('/login')
+                } else {
+                    this.$message({
+                        message: res.message,
+                        type: 'error'
+                    })
+                }
+            })
         }
     },
     computed: {
@@ -44,9 +65,20 @@ export default {
       font-size: 22px;
   }
   .header-right{
-    line-height: 60px;
+    padding: 14px 0px;
+    line-height: 20px;
     width: 50%;
     float:right;
     text-align: right;
+  }
+  .top-userImg{
+    margin: 0 8px 0 10px;
+    padding: 2px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%!important;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #eee;
   }
 </style>

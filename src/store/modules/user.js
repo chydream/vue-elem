@@ -1,4 +1,4 @@
-import {login, getMenu} from '@/api/userApi'
+import {login, getMenu, logout} from '@/api/userApi'
 const user = {
     namespaced: true,
     state: {
@@ -23,6 +23,14 @@ const user = {
             return new Promise((resolve, reject) => {
                 login(params).then(res => {
                     commit('SET_TOKEN', res.data.token)
+                    resolve(res)
+                })
+            })
+        },
+        Logout ({state, commit, dispatch}, params) {
+            return new Promise((resolve, reject) => {
+                logout(params).then(res => {
+                    commit('SET_TOKEN', '')
                     resolve(res)
                 })
             })
