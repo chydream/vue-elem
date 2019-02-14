@@ -67,7 +67,10 @@ router.beforeEach((to, from, next) => {
             value: to.path,
             query: to.query
           }
+          // 页面标签配置
           store.commit('common/ADD_TAG', params)
+          // 页面缓存配置
+          store.commit('common/KEEP_ALIVE', store.getters.keepAlivePage)
         }
       })
     }

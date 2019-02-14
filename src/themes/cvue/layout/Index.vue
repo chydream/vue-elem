@@ -60,7 +60,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next((vm) => {
       // 页面缓存配置
-      vm.$store.commit('common/KEEP_ALIVE', vm.keepAlivePage)
+      // vm.$store.commit('common/KEEP_ALIVE', vm.keepAlivePage)
     })
   },
   beforeRouteLeave (to, from, next) {

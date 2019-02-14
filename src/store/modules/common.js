@@ -5,8 +5,11 @@ const common = {
         isCollapse: false,
         tagList: JSON.parse(sessionStorage.getItem('tagList')) || [],
         tag: JSON.parse(sessionStorage.getItem('tag')) || {},
+        isFullScreen: false,
+        // 页面缓存配置
         keepAlive: [],
-        isFullScreen: false
+        keepAlivePage: ['Page', 'Auth'],
+        keepAlivePath: ['/item/page', '/item/auth']
     },
     getters: {
         
@@ -38,6 +41,12 @@ const common = {
             var i = getArrIndex(state.tagList, params.value)
             state.tagList.splice(i, 1)
             sessionStorage.setItem('tagList', JSON.stringify(state.tagList))
+        },
+        CLEAR_TAG (state, params) {
+            state.tagList = []
+            sessionStorage.setItem('tagList', JSON.stringify(state.tagList))
+            state.tag = {}
+            sessionStorage.setItem('tag', state.tag)
         },
         KEEP_ALIVE (state, params) {
             state.keepAlive = params

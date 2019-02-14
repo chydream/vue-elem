@@ -5,7 +5,9 @@ const getters = {
     menu: state => state.user.menu,
     isCollapse: state => state.common.isCollapse,
     tagList: state => state.common.tagList,
+    isFullScreen: state => state.common.isFullScreen,
     keepAlive: state => state.common.keepAlive,
-    isFullScreen: state => state.common.isFullScreen
+    keepAlivePage: state => state.common.keepAlivePage,
+    keepAlivePath: state => state.common.keepAlivePath
 }
 export default getters

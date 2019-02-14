@@ -7,10 +7,7 @@ const mixinsFun = {
         add: 'add',
         edit: 'edit',
         delete: 'delete'
-      },
-      // 页面缓存配置
-      keepAlivePage: ['Page', 'Auth'],
-      keepAlivePath: ['/item/page', '/item/auth']
+      }
     }
   },
   methods: {

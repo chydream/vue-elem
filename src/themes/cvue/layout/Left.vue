@@ -73,6 +73,7 @@ export default {
         var arr = JSON.parse(JSON.stringify(this.keepAlivePage))
         arr[index] = ''
         this.$store.commit('common/KEEP_ALIVE', arr)
+        // console.log(this.keepAlive)
       }
       this.$router.push(path)
     },
@@ -105,7 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isCollapse', 'menu']),
+    ...mapGetters(['isCollapse', 'menu', 'keepAlive', 'keepAlivePage', 'keepAlivePath']),
     activeIndex () {
       return this.$route.path
     }

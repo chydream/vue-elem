@@ -36,6 +36,7 @@ export default {
             this.$store.dispatch('user/Logout').then(res => {
                 if (res.success) {
                     this.$router.push('/login')
+                    this.$store.commit('common/CLEAR_TAG')
                 } else {
                     this.$message({
                         message: res.message,
