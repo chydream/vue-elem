@@ -14,8 +14,8 @@ Mock.mock(/\/user\/login/, 'post', user)
 let userInfo = Mock.mock({
     userInfo: {
         role: ['admin'],
-        userAccount: 'chenyong',
-        userName: '陈勇',
+        userAccount: 'chydream',
+        userName: '驰兮',
         userId: '1826',
         pic: '/static/img/6.jpg'
     }
