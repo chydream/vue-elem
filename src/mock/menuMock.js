@@ -20,6 +20,15 @@ let menu = {
           children: []
         },
         {
+          id: 4,
+          label: '页面',
+          href: '/item/page',
+          icon: 'fa fa-users',
+          permission: ['view', 'add', 'delete', 'edit'],
+          show: true,
+          children: []
+        },
+        {
             id: 2,
             label: '分类页',
             href: '',

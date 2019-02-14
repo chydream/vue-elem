@@ -59,7 +59,8 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next((vm) => {
-      vm.$store.commit('common/KEEP_ALIVE', ['Page'])
+      // 页面缓存配置
+      vm.$store.commit('common/KEEP_ALIVE', vm.keepAlivePage)
     })
   },
   beforeRouteLeave (to, from, next) {

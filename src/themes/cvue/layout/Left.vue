@@ -58,17 +58,21 @@ export default {
   name: 'Left',
   data () {
     return {
-      menu: [],
+      // menu: [],
       menuList: []
     }
   },
   mounted () {
-    this.getMenuData()
+    // this.getMenuData()
   },
   methods: {
     goUrl (path) {
-      if (this.activeIndex != path && path == '/item/page') {
-        this.$store.commit('common/KEEP_ALIVE', [])
+      // 页面缓存配置
+      var index = this.keepAlivePath.indexOf(path)
+      if (this.activeIndex != path && index > -1) {
+        var arr = JSON.parse(JSON.stringify(this.keepAlivePage))
+        arr[index] = ''
+        this.$store.commit('common/KEEP_ALIVE', arr)
       }
       this.$router.push(path)
     },
@@ -101,7 +105,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isCollapse']),
+    ...mapGetters(['isCollapse', 'menu']),
     activeIndex () {
       return this.$route.path
     }
