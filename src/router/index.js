@@ -79,6 +79,11 @@ const router = new Router({
           path: 'page',
           name: 'Page',
           component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Page')
+        },
+        {
+          path: 'auth',
+          name: 'Auth',
+          component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Auth')
         }
       ]
     }

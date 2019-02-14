@@ -11,6 +11,15 @@ let menu = {
             children: []
         },
         {
+          id: 4,
+          label: '权限配置',
+          href: '/item/auth',
+          icon: 'fa fa-users',
+          permission: ['view', 'add', 'delete', 'edit'],
+          show: true,
+          children: []
+        },
+        {
             id: 2,
             label: '分类页',
             href: '',

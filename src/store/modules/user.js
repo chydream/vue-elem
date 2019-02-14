@@ -2,8 +2,8 @@ import {login, getMenu, logout, getUserInfo} from '@/api/userApi'
 const user = {
     namespaced: true,
     state: {
-        userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {},
-        role: JSON.parse(sessionStorage.getItem('role')) || [],
+        userInfo: {},
+        role: [],
         token: sessionStorage.getItem('token') || '',
         menu: [],
         permission: {}
@@ -18,12 +18,10 @@ const user = {
             state.menu = params
         },
         SET_ROLE: (state, params) => {
-            state.role = params
-            sessionStorage.setItem('role', JSON.stringify(params))
+            state.role = params 
         },
         SET_USER_INFO: (state, params) => {
             state.userInfo = params
-            sessionStorage.setItem('userInfo', JSON.stringify(params))
         }
     },
     actions: {
@@ -64,7 +62,7 @@ const user = {
             })
         },
         // 将菜单列表扁平化形成权限列表
-        GetPermissionList ({state}) {
+        GetPermissionList ({state, dispatch}) {
             return new Promise((resolve) => {
                 let permissionList = []
                 // 将菜单数据扁平化为一级
@@ -77,8 +75,12 @@ const user = {
                         }
                     }
                 }
-                flatNavList(state.menu)
-                resolve(permissionList)
+                dispatch('GetUserInfo', state.token).then(res => {
+                    dispatch('GetMenu').then(res => {
+                        flatNavList(state.menu)
+                        resolve(permissionList)
+                    })
+                })
             })
         }
     }
