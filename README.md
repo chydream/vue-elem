@@ -1,7 +1,7 @@
 # vue_demo
 
 > A Vue.js project
-在线地址：http://www.qinimai.com/demo/dist/index.html
+在线地址：http://www.qinimai.com/demo/dist/index.html  admin,123456  user,123456 user角色目前没有页面访问权限
 ## Build Setup
 
 ``` bash
