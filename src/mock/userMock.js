@@ -17,7 +17,7 @@ let userInfo = Mock.mock({
         userAccount: 'chydream',
         userName: '驰兮',
         userId: '1826',
-        pic: '/static/img/6.jpg'
+        pic: './static/img/6.jpg'
     }
 })
 Mock.mock(/\/user\/userInfo/, 'post', userInfo)

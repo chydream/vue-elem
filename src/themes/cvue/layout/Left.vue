@@ -122,6 +122,6 @@ export default {
     text-align: center;
   }
   .el-menu{
-    border-right: none;
+    border-right: none!important;
   }
 </style>
