@@ -66,7 +66,7 @@ export default {
       font-size: 22px;
   }
   .header-right{
-    padding: 14px 0px;
+    padding: 13px 0px;
     line-height: 20px;
     width: 50%;
     float:right;
@@ -81,5 +81,6 @@ export default {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid #eee;
+    vertical-align: middle;
   }
 </style>

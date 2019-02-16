@@ -24,15 +24,17 @@
           </div>
         </div>
         <div class="form-actions">
-          <label class="rememberme mt-checkbox mt-checkbox-outline">
-            <input type="checkbox" name="LoginForm[rememberMe]" value="1"> 记住我
-            <span></span>
-          </label>
+          <el-checkbox v-model="checked" style="margin-top:10px;">记住我</el-checkbox>
           <button type="button" class="btn green pull-right" @click="getLogin">登录</button>
         </div>
       </form>
     </div>
     <div class="copyright">2016 © copyright</div>
+    <div class="bg">
+      <ul>
+        <li v-for="(item, index) in imgs" :key="index" :class="{activeItem:activeIndex == index}"><img :src="item"></li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -41,9 +43,16 @@ export default {
   name: 'login',
   data () {
     return {
-      msg: 'hello',
+      imgs: [
+          'http://www.qinimai.com/backend/web/statics/metronic/imgs/7.jpg',
+          'http://www.qinimai.com/backend/web/statics/metronic/imgs/2.jpg',
+          'http://www.qinimai.com/backend/web/statics/metronic/imgs/3.jpg',
+          'http://www.qinimai.com/backend/web/statics/metronic/imgs/4.jpg'
+        ],
       username: '',
-      password: ''
+      password: '',
+      checked: false,
+      activeIndex: 0
     }
   },
   methods: {
@@ -66,25 +75,103 @@ export default {
           })
         }
       })
+    },
+    bgAnimation () {
+      var timer = null
+      var interval = 5000
+      timer = setInterval(() => {
+        if (this.activeIndex < 3) {
+          this.activeIndex++
+        } else {
+          this.activeIndex = 0
+        }
+      }, interval)
     }
   },
   created () {
-     window.jQuery(function () {
-      // init background slide images
-      window.jQuery.backstretch([
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/7.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/2.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/3.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/4.jpg'
-        ], {
-            fade: 1000,
-            duration: 8000
-        }
-      )
-    })
+    this.bgAnimation()
   }
 }
 </script>
 <style scoped lang="scss">
+@import url("./css/bootstrap.min.css");
 @import url("./css/login.css");
+.login{
+  .bg{
+    position: relative;
+  }
+  .bg ul li{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 2s ease;
+  }
+  .activeItem{
+    opacity: 1!important;
+  }
+  .bg ul li img{
+    width: 100%;
+    height: 100%;
+  }
+  .display-hide, .control-label{
+    display: none;
+  }
+  .input-icon{
+    position:relative;
+  }
+  .input-icon i{
+    color: #ccc;
+    position: absolute;
+    margin: 9px 2px 4px 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+    left: 0;
+  }
+  .input-icon input{
+    padding-left: 33px;
+  }
+  .mt-checkbox, .mt-radio {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+  }
+  .mt-checkbox>span, .mt-radio>span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 19px;
+      width: 19px;
+      border: 1px solid #d9d9d9;
+      background: 0 0;
+  }
+  .mt-checkbox>input, .mt-radio>input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .mt-checkbox>span:after {
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid #666;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+}
 </style>

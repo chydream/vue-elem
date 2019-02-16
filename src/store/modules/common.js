@@ -46,7 +46,7 @@ const common = {
             state.tagList = []
             sessionStorage.setItem('tagList', JSON.stringify(state.tagList))
             state.tag = {}
-            sessionStorage.setItem('tag', state.tag)
+            sessionStorage.setItem('tag', JSON.stringify(state.tag))
         },
         KEEP_ALIVE (state, params) {
             state.keepAlive = params
