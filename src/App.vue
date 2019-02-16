@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  watch: {
+    '$route' (to, from) {
+      // this.handleLoading(2000)
+    }
+  }
 }
 </script>
 

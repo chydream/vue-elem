@@ -69,10 +69,7 @@ export default {
             }
           })
         } else {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          })
+          this.tip(res.message, 'error')
         }
       })
     },

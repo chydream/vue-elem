@@ -33,16 +33,15 @@ export default {
             this.$store.commit('common/SET_COLLAPSE')
         },
         logout () {
-            this.$store.dispatch('user/Logout').then(res => {
-                if (res.success) {
-                    this.$router.push('/login')
-                    this.$store.commit('common/CLEAR_TAG')
-                } else {
-                    this.$message({
-                        message: res.message,
-                        type: 'error'
-                    })
-                }
+            this.handleConfirm('确定要退出吗？', () => {
+                this.$store.dispatch('user/Logout').then(res => {
+                    if (res.success) {
+                        this.$router.push('/login')
+                        this.$store.commit('common/CLEAR_TAG')
+                    } else {
+                        this.tip(res.message, 'error')
+                    }
+                })
             })
         }
     },
