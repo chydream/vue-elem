@@ -2,10 +2,10 @@ import {login, getMenu, logout, getUserInfo} from '@/api/userApi'
 const user = {
     namespaced: true,
     state: {
-        userInfo: {},
-        role: [],
+        userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {},
+        role: JSON.parse(sessionStorage.getItem('role')) || [],
         token: sessionStorage.getItem('token') || '',
-        menu: [],
+        menu: JSON.parse(sessionStorage.getItem('menu')) || [],
         permission: {}
     },
     getters: {},
@@ -16,12 +16,15 @@ const user = {
         },
         SET_MENU: (state, params) => {
             state.menu = params
+            sessionStorage.setItem('menu', JSON.stringify(params))
         },
         SET_ROLE: (state, params) => {
             state.role = params 
+            sessionStorage.setItem('role', JSON.stringify(params))
         },
         SET_USER_INFO: (state, params) => {
             state.userInfo = params
+            sessionStorage.setItem('userInfo', JSON.stringify(params))
         }
     },
     actions: {
@@ -75,12 +78,12 @@ const user = {
                         }
                     }
                 }
-                dispatch('GetUserInfo', state.token).then(res => {
+                // dispatch('GetUserInfo', state.token).then(res => {
                     dispatch('GetMenu').then(res => {
                         flatNavList(state.menu)
                         resolve(permissionList)
                     })
-                })
+                // })
             })
         }
     }
