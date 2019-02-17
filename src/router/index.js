@@ -84,6 +84,11 @@ const router = new Router({
           path: 'auth',
           name: 'Auth',
           component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Auth')
+        },
+        {
+          path: 'dialog',
+          name: 'Dialog',
+          component: () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Dialog')
         }
       ]
     }

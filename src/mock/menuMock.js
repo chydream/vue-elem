@@ -29,6 +29,15 @@ let menu = {
           children: []
         },
         {
+          id: 5,
+          label: '弹窗',
+          href: '/item/dialog',
+          icon: 'fa fa-users',
+          permission: ['view', 'add', 'delete', 'edit'],
+          show: true,
+          children: []
+        },
+        {
             id: 2,
             label: '分类页',
             href: '',
