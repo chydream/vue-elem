@@ -1,174 +1,240 @@
 <template>
-  <div class="login">
-    <div class="content">
-      <form id="login-form" class="login-form">
-        <h3 class="form-title">登录</h3>
-        <div class="alert alert-danger display-hide">
-          <button class="close" data-close="alert"></button>
-          <span>输入你的用户名或密码</span>
-        </div>
-        <div class="form-group field-loginform-username required">
-          <label class="control-label visible-ie8 visible-ie9" for="loginform-username">用户名</label>
-          <div class="input-icon">
-            <i class="fa fa-user"></i>
-            <input type="text" id="loginform-username" class="form-control placeholder-no-fix"  name="LoginForm[username]" autocomplete="off" placeholder="用户名" aria-required="true" v-model="username">
-            <p class="help-block help-block-error"></p>
-          </div>
-        </div>
-        <div class="form-group field-loginform-password required">
-          <label class="control-label visible-ie8 visible-ie9" for="loginform-password">密码</label>
-          <div class="input-icon">
-            <i class="fa fa-lock"></i>
-            <input type="password" id="loginform-password" class="form-control placeholder-no-fix" name="LoginForm[password]" autocomplete="off" placeholder="密码" aria-required="true" v-model="password">
-            <p class="help-block help-block-error"></p>
-          </div>
-        </div>
-        <div class="form-actions">
-          <el-checkbox v-model="checked" style="margin-top:10px;">记住我</el-checkbox>
-          <button type="button" class="btn green pull-right" @click="getLogin">登录</button>
-        </div>
-      </form>
-    </div>
-    <div class="copyright">2016 © copyright</div>
-    <div class="bg">
-      <ul>
-        <li v-for="(item, index) in imgs" :key="index" :class="{activeItem:activeIndex == index}"><img :src="item"></li>
-      </ul>
-    </div>
+  <div class="log-wrap" :style="{ height: height + 'px' }">
+    <loading-public></loading-public>
+	<div class="logo text-center"><img src="./images/logo.png"></div>
+    <form id="logForm" class="log-form">
+      <div class="log-input">
+        <i class="sicon-user"></i><input type="text" class="input-item" placeholder="请输入用户名" v-model="userName">
+      </div>
+      <div class="log-input">
+        <i class="sicon-key"></i><input type="password" class="input-item" placeholder="请输入密码" v-model="userPwd">
+      </div>
+      <p class="text-right forgot"><a href="javascript:void(0)" id="forgotPassword">忘记密码？</a></p>
+      <p class="text-center"><a href="javascript:void(0)" class="log-sub" id="logSub" @click="login">登录</a></p>
+    </form>
   </div>
 </template>
-<script>
 
+<script>
+import { Group, Cell, Tab, TabItem, Swiper, SwiperItem, XButton, XHeader } from 'vux'
+import { mapState } from 'vuex'
+import LoadingPublic from '../Public/LoadingPublic'
+import md5 from 'blueimp-md5'
 export default {
-  name: 'login',
+  components: {
+    Group,
+    Cell,
+    LoadingPublic,
+    Tab,
+    TabItem,
+    Swiper,
+    SwiperItem,
+    XButton,
+    XHeader
+  },
   data () {
     return {
-      imgs: [
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/7.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/2.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/3.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/4.jpg'
-        ],
-      username: '',
-      password: '',
-      checked: false,
-      activeIndex: 0
+      userName: '',
+      userPwd: '',
+      height: this.getScrollHeight()
     }
   },
+  computed: {
+    ...mapState({
+      baseUrl: state => state.common.baseUrl
+    })
+  },
+  created () {
+    this.goIndex()
+  },
+  mounted () {
+  },
   methods: {
-    getLogin () {
-      var params = {
-        username: this.username,
-        password: this.password
+    getScrollTop () {
+      var scrollTop = 0
+      if (document.documentElement && document.documentElement.scrollTop) {
+        scrollTop = document.documentElement.scrollTop
+      } else if (document.body) {
+        scrollTop = document.body.scrollTop
       }
-      this.$store.dispatch('user/Login', params).then(res => {
-        if (res.success) {
-          this.$store.dispatch('user/GetUserInfo', res.data.token).then(res => {
-            if (res.success) {
-              this.$router.push('/index/home')
+      return scrollTop
+    },
+    getClientHeight () {
+      var clientHeight = 0
+      if (document.body.clientHeight && document.documentElement.clientHeight) {
+        clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight
+      } else {
+        clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight
+      }
+      return clientHeight
+    },
+    getScrollHeight () {
+      return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+    },
+    login () {
+      var self = this
+      var userName = self.userName
+      var userPwd = self.userPwd
+      if (userName === '') {
+        self.$vux.toast.show({
+          text: '用户名不能为空',
+          type: 'text',
+          width: '140px'
+        })
+        return
+      }
+      if (userPwd === '') {
+        self.$vux.toast.show({
+          text: '密码不能为空',
+          type: 'text',
+          width: '140px'
+        })
+        return
+      }
+      self.loginApi.getLogin(userName, md5(userPwd), 1).then((response) => {
+        var data = response.data.body.data
+        if (response.data.body.code === 0) {
+          localStorage.setItem('userName', data.userName)
+          localStorage.setItem('accessToken', data.accessToken)
+          var accessToken = data.accessToken
+          self.loginApi.getUserId(accessToken).then((response) => {
+            var newData = response.data.body.data
+            if (response.data.body.code === 0) {
+              localStorage.setItem('userId', newData.id)
+              self.goIndex()
             }
           })
         } else {
-          this.tip(res.message, 'error')
+          self.$vux.toast.show({
+            text: '用户名或者密码错误',
+            type: 'text',
+            width: '140px'
+          })
         }
+      }, (res) => {
+        self.$vux.toast.show({
+          text: '接口地址错误',
+          type: 'text',
+          width: '140px'
+        })
       })
     },
-    bgAnimation () {
-      var timer = null
-      var interval = 5000
-      timer = setInterval(() => {
-        if (this.activeIndex < 3) {
-          this.activeIndex++
-        } else {
-          this.activeIndex = 0
-        }
-      }, interval)
+    goIndex () {
+      var accessToken = localStorage.getItem('accessToken')
+      // console.log(accessToken)
+      if (accessToken !== null) {
+        this.$router.push('/dataShow')
+      }
     }
-  },
-  created () {
-    this.bgAnimation()
   }
 }
 </script>
-<style scoped lang="scss">
-@import url("./css/bootstrap.min.css");
-@import url("./css/login.css");
-.login{
-  .bg{
-    position: relative;
-  }
-  .bg ul li{
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: all 2s ease;
-  }
-  .activeItem{
-    opacity: 1!important;
-  }
-  .bg ul li img{
-    width: 100%;
-    height: 100%;
-  }
-  .display-hide, .control-label{
-    display: none;
-  }
-  .input-icon{
-    position:relative;
-  }
-  .input-icon i{
-    color: #ccc;
-    position: absolute;
-    margin: 9px 2px 4px 10px;
-    z-index: 3;
-    width: 16px;
-    font-size: 16px;
+
+<style scoped lang="less">
+/* login */
+.text-center {
     text-align: center;
-    left: 0;
-  }
-  .input-icon input{
-    padding-left: 33px;
-  }
-  .mt-checkbox, .mt-radio {
-    display: inline-block;
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    font-size: 14px;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    -ms-transition: all .3s;
-    -o-transition: all .3s;
-    transition: all .3s;
-  }
-  .mt-checkbox>span, .mt-radio>span {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 19px;
-      width: 19px;
-      border: 1px solid #d9d9d9;
-      background: 0 0;
-  }
-  .mt-checkbox>input, .mt-radio>input {
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
-    filter: alpha(opacity=0);
-  }
-  .mt-checkbox>span:after {
-    left: 6px;
-    top: 3px;
-    width: 5px;
-    height: 10px;
-    border: solid #666;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
+}
+.text-right {
+    text-align: right;
+}
+.log-wrap{
+	background: url(./images/log-bg.png);
+	width: 100%;
+	height: 100%;
+	background-size:cover;	
+}
+.logo img{
+	width: 79.81px;	
+	height: 79.81px;
+	margin-top: 105.8px;
+	margin-bottom: 124.2px;
+}
+.sicon-user{
+	width: 26.909999999999997px;
+	height: 26.909999999999997px;
+	background: url(./images/user.png) no-repeat 0 0;
+	background-size: cover;
+	display: inline-block;
+	position: absolute;
+	left: 9.89px;
+	top: 6px;
+}
+.sicon-key {
+  width: 26.909999999999997px;
+	height: 26.909999999999997px;
+  background: url(./images/password.png) no-repeat 0 0;
+  background-size: cover;
+  display: inline-block;
+  position: absolute;
+  left: 9.89px;
+	top: 6px;
+}
+.header-title{
+	color: #fff;
+	margin-bottom: 79.81px;
+	margin-top:15px;
+	font-size: 17.94px;
+}
+
+.log-input{
+	background: transparent;
+	border-bottom: 1px solid #fff;
+	padding: 4.6000000000000005px;
+	width: 249.77999999999997px;
+	margin: 0 auto;
+	height: 34.96px;
+	line-height: 34.96px;
+	position: relative;
+	margin-bottom: 18.400000000000002px;
+}
+.input-item{
+	background-color: transparent!important;
+	width: 100%;
+  height: 100%!important;
+  border: none!important;
+  padding: 2px!important;
+  text-indent: 39.1px;
+	font-size: 12.88px;
+	color: #e4fcee;
+	box-sizing: border-box;
+}
+.log-form{
+	width: 249.77999999999997px;
+	margin: 0 auto;
+}
+.log-form p a{
+	color: #dedede;
+	font-size: 11.96px;
+	letter-spacing: 1px;
+}
+.log-form p.forgot{
+	margin-top: -6.8999999999999995px;
+}
+.log-sub{
+	width: 192.97000000000003px;
+	height: 39.79px;
+	line-height: 39.79px;
+	display: inline-block;
+	text-align: center;
+	border: 1px solid #fff;
+	border-radius: 39.79px;
+	font-size: 17.94px!important;
+	margin-top: 29.900000000000002px;
+}
+.fix-input{
+  padding-right:0px; 
+  width: 92px;
+}
+.validate,.validate:active,.validate:focus{
+	background: transparent!important;
+	color: #fff!important;
+	font-size:13.799999999999999px;
+	height: 34.96px !important;
+	width: 87.39999999999999px;
+	position: absolute;
+	right: 0px;
+	top: -1.1500000000000001px;
+	border:none;
 }
 </style>
