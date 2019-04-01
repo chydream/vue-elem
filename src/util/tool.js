@@ -43,7 +43,6 @@ export function getArrIndex (arr, value) {
         }
     }
 }
-
 // 全屏插件
 export const reqFullScreen = () => {
     if (document.documentElement.requestFullScreen) {
@@ -62,4 +61,43 @@ export const exitFullScreen = () => {
     } else if (document.documentElement.mozRequestFullScreen) {
         document.mozCancelFullScreen()
     }
+}
+export function copayData () {
+    var copy = document.getElementById('walletAddress')
+    copy.select() // 选择对象
+    document.execCommand('Copy') // 执行浏览器复制命令
+    this.showToast = true
+    this.toastData = '复制充值地址成功'
+}
+// 图片上传base64
+export function uploadImg () {
+    var self = this
+    var imgFiles = document.getElementById('myFile').files
+    for (var i = 0; i < imgFiles.length; i++) {
+        var reader = new FileReader()
+        var imgSrc
+        reader.onload = function (e) {
+            imgSrc = e.target.result
+            self.payImage.push(imgSrc)
+        }
+        reader.readAsDataURL(imgFiles[i])
+    }
+}
+// 图片上传FormData
+export function uploadImgFormData () {
+    var self = this
+    self.imgLoading = true
+    var imgFiles = document.getElementById('myFile').files[0]
+    var fd = new FormData()
+    fd.append('uploadFile', imgFiles)
+}
+export function getUrlRoot () {
+    var baseUrl = location.protocol + '//' + location.host
+//    var pattern = /(127)|(localhost)|(file)/;
+//    if (pattern.test(baseUrl)) {
+//        baseUrl = 'http://192.168.12.223:8878/fjhswl-server' 
+//    }
+    baseUrl = 'http://114.115.148.14:8763/fjhswl-server'
+//    baseUrl = 'http://192.168.12.223:8763/fjhswl-server' 
+    return baseUrl
 }
