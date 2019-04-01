@@ -101,3 +101,20 @@ export function getUrlRoot () {
 //    baseUrl = 'http://192.168.12.223:8763/fjhswl-server' 
     return baseUrl
 }
+export function refreshData () {
+    var self = this
+    self.getReChargeList(self.page, self.pageSize)
+    var wPow = document.getElementById('wPow')
+    var wBody = document.getElementById('wBody')
+    var wOffsetHeight = wBody.offsetHeight // scrollTop offsetHeight scrollHeight
+    var wOffsetTop = wBody.offsetTop
+    wPow.addEventListener('scroll', function (ev) {
+        var fitHeight = wOffsetTop - 50 + wOffsetHeight * (self.page - 1)
+        if (this.scrollTop > fitHeight) {
+            if (self.page < self.total) {
+                self.page += 1
+                self.getReChargeList(self.page, self.pageSize)
+            }
+        }
+    })
+}
