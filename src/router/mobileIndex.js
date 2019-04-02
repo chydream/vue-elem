@@ -8,12 +8,12 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component:  () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Dialog')
+      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/index')
     },
     {
       path: '/',
       name: 'Login',
-      component:  () => import(/* webpackChunkName: "group-foo" */'../themes/cvue/views/item/Dialog')
+      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/index')
     }
   ]
 })
