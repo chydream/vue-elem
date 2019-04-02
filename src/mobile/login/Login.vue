@@ -20,16 +20,12 @@ export default {
     return {
       userName: '',
       userPwd: '',
-      height: this.getScrollHeight()
+      height: ''
     }
   },
   computed: {
-    ...mapState({
-      baseUrl: state => state.common.baseUrl
-    })
   },
   created () {
-    this.goIndex()
   },
   mounted () {
   },
