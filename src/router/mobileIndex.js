@@ -8,12 +8,12 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/index')
+      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/Index')
     },
     {
       path: '/',
       name: 'Login',
-      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/index')
+      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/login/Login')
     }
   ]
 })

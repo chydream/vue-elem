@@ -118,3 +118,24 @@ export function refreshData () {
         }
     })
 }
+export function getScrollTop () {
+    var scrollTop = 0
+    if (document.documentElement && document.documentElement.scrollTop) {
+        scrollTop = document.documentElement.scrollTop
+    } else if (document.body) {
+        scrollTop = document.body.scrollTop
+    }
+    return scrollTop
+}
+export function getClientHeight () {
+    var clientHeight = 0
+    if (document.body.clientHeight && document.documentElement.clientHeight) {
+        clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight
+    } else {
+        clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight
+    }
+    return clientHeight
+}
+export function getScrollHeight () {
+    return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+}

@@ -1,7 +1,5 @@
 <template>
   <div class="log-wrap" :style="{ height: height + 'px' }">
-    <loading-public></loading-public>
-	<div class="logo text-center"><img src="./images/logo.png"></div>
     <form id="logForm" class="log-form">
       <div class="log-input">
         <i class="sicon-user"></i><input type="text" class="input-item" placeholder="请输入用户名" v-model="userName">
@@ -14,24 +12,10 @@
     </form>
   </div>
 </template>
-
 <script>
-import { Group, Cell, Tab, TabItem, Swiper, SwiperItem, XButton, XHeader } from 'vux'
 import { mapState } from 'vuex'
-import LoadingPublic from '../Public/LoadingPublic'
 import md5 from 'blueimp-md5'
 export default {
-  components: {
-    Group,
-    Cell,
-    LoadingPublic,
-    Tab,
-    TabItem,
-    Swiper,
-    SwiperItem,
-    XButton,
-    XHeader
-  },
   data () {
     return {
       userName: '',
@@ -50,81 +34,7 @@ export default {
   mounted () {
   },
   methods: {
-    getScrollTop () {
-      var scrollTop = 0
-      if (document.documentElement && document.documentElement.scrollTop) {
-        scrollTop = document.documentElement.scrollTop
-      } else if (document.body) {
-        scrollTop = document.body.scrollTop
-      }
-      return scrollTop
-    },
-    getClientHeight () {
-      var clientHeight = 0
-      if (document.body.clientHeight && document.documentElement.clientHeight) {
-        clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight
-      } else {
-        clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight
-      }
-      return clientHeight
-    },
-    getScrollHeight () {
-      return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
-    },
     login () {
-      var self = this
-      var userName = self.userName
-      var userPwd = self.userPwd
-      if (userName === '') {
-        self.$vux.toast.show({
-          text: '用户名不能为空',
-          type: 'text',
-          width: '140px'
-        })
-        return
-      }
-      if (userPwd === '') {
-        self.$vux.toast.show({
-          text: '密码不能为空',
-          type: 'text',
-          width: '140px'
-        })
-        return
-      }
-      self.loginApi.getLogin(userName, md5(userPwd), 1).then((response) => {
-        var data = response.data.body.data
-        if (response.data.body.code === 0) {
-          localStorage.setItem('userName', data.userName)
-          localStorage.setItem('accessToken', data.accessToken)
-          var accessToken = data.accessToken
-          self.loginApi.getUserId(accessToken).then((response) => {
-            var newData = response.data.body.data
-            if (response.data.body.code === 0) {
-              localStorage.setItem('userId', newData.id)
-              self.goIndex()
-            }
-          })
-        } else {
-          self.$vux.toast.show({
-            text: '用户名或者密码错误',
-            type: 'text',
-            width: '140px'
-          })
-        }
-      }, (res) => {
-        self.$vux.toast.show({
-          text: '接口地址错误',
-          type: 'text',
-          width: '140px'
-        })
-      })
-    },
-    goIndex () {
-      var accessToken = localStorage.getItem('accessToken')
-      // console.log(accessToken)
-      if (accessToken !== null) {
-        this.$router.push('/dataShow')
-      }
     }
   }
 }
@@ -132,6 +42,18 @@ export default {
 
 <style scoped lang="less">
 /* login */
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:#e4fcee;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:#e4fcee;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:#e4fcee;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:#e4fcee;
+}
 .text-center {
     text-align: center;
 }
@@ -139,7 +61,7 @@ export default {
     text-align: right;
 }
 .log-wrap{
-	background: url(./images/log-bg.png);
+	background: url(http://www.qinimai.com/backend/web/statics/metronic/imgs/7.jpg);
 	width: 100%;
 	height: 100%;
 	background-size:cover;	
@@ -201,7 +123,8 @@ export default {
 }
 .log-form{
 	width: 249.77999999999997px;
-	margin: 0 auto;
+  margin: 0 auto;
+  padding-top: 130px;
 }
 .log-form p a{
 	color: #dedede;
