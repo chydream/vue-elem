@@ -44,11 +44,11 @@ export default {
   data () {
     return {
       imgs: [
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/7.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/2.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/3.jpg',
-          'http://www.qinimai.com/backend/web/statics/metronic/imgs/4.jpg'
-        ],
+        'http://www.qinimai.com/backend/web/statics/metronic/imgs/7.jpg',
+        'http://www.qinimai.com/backend/web/statics/metronic/imgs/2.jpg',
+        'http://www.qinimai.com/backend/web/statics/metronic/imgs/3.jpg',
+        'http://www.qinimai.com/backend/web/statics/metronic/imgs/4.jpg'
+      ],
       username: '',
       password: '',
       checked: false,

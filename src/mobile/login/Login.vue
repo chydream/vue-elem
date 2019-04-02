@@ -31,6 +31,21 @@ export default {
   },
   methods: {
     login () {
+			var params = {
+        username: this.username,
+        password: this.password
+      }
+      this.$store.dispatch('user/Login', params).then(res => {
+        if (res.success) {
+          this.$store.dispatch('user/GetUserInfo', res.data.token).then(res => {
+            if (res.success) {
+              this.$router.push('/index/home')
+            }
+          })
+        } else {
+          this.tip(res.message, 'error')
+        }
+      })
     }
   }
 }

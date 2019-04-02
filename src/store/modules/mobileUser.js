@@ -1,5 +1,5 @@
 import {login, getMenu, logout, getUserInfo} from '@/api/userApi'
-const user = {
+const mobileUser = {
     namespaced: true,
     state: {
         userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {},
@@ -88,4 +88,4 @@ const user = {
         }
     }
 }
-export default user
+export default mobileUser
