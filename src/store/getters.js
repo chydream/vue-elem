@@ -8,6 +8,7 @@ const getters = {
     isFullScreen: state => state.common.isFullScreen,
     keepAlive: state => state.common.keepAlive,
     keepAlivePage: state => state.common.keepAlivePage,
-    keepAlivePath: state => state.common.keepAlivePath
+    keepAlivePath: state => state.common.keepAlivePath,
+    mobileToken: state => state.mobileUser.token
 }
 export default getters

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 
 Vue.use(Router)
 
@@ -8,7 +9,7 @@ const router = new Router({
     {
       path: '/home',
       name: 'Home',
-      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/Index')
+      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/views/home/Home')
     },
     {
       path: '/',
@@ -34,5 +35,13 @@ const router = new Router({
 export default router
 
 router.beforeEach((to, from, next) => {
-  next()
+  if (store.getters.mobileToken) {
+    if (to.path == '/') {
+      next({path: '/home', replace: true})
+    } else {
+      next()
+    }
+  } else {
+    next({path: '/', replace: true})
+  }
 })

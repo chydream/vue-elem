@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import mixinsIndex from './mixinsIndex'
-const Plugins = [mixinsIndex]
+import mixinsMobile from './mixinsMobile'
+const Plugins = [mixinsIndex, mixinsMobile]
 Plugins.map((plugin) => {
     Vue.use(plugin)
 })

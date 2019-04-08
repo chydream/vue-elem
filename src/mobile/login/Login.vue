@@ -32,18 +32,19 @@ export default {
   methods: {
     login () {
 			var params = {
-        username: this.username,
-        password: this.password
+        username: this.userName,
+        password: this.userPwd
       }
-      this.$store.dispatch('user/Login', params).then(res => {
+      this.$store.dispatch('mobileUser/Login', params).then(res => {
         if (res.success) {
-          this.$store.dispatch('user/GetUserInfo', res.data.token).then(res => {
+          this.$store.dispatch('mobileUser/GetUserInfo', res.data.token).then(res => {
+            // console.log(res)
             if (res.success) {
-              this.$router.push('/index/home')
+              this.$router.push('/home')
             }
           })
         } else {
-          this.tip(res.message, 'error')
+          this.showToast('登录失败')
         }
       })
     }
