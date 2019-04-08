@@ -13,6 +13,17 @@ const mixinsFun = {
         text: text,
         type: type == undefined ? 'text' : type
       })
+    },
+    showConfirm (title, content, callback) {
+      this.$vux.confirm.show({
+        title: title,
+        content: content,
+        onCancel () {
+        },
+        onConfirm () {
+          callback()
+        }
+      })
     }
   }
 }
