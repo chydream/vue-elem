@@ -34,14 +34,31 @@ const router = new Router({
 })
 export default router
 
+// 路由生命周期
 router.beforeEach((to, from, next) => {
+  Vue.$vux.loading.show({
+    text: '加载中'
+  })
   if (store.getters.mobileToken) {
     if (to.path == '/') {
       next({path: '/home', replace: true})
+      setTimeout(() => {
+        Vue.$vux.loading.hide()
+      }, 200)
     } else {
       next()
     }
   } else {
-    next({path: '/', replace: true})
+    if (to.path == '/') {
+      next()
+    } else {
+      next({path: '/', replace: true})
+    } 
   }
+})
+// 路由生命周期
+router.afterEach((to, from) => {
+  setTimeout(() => {
+    Vue.$vux.loading.hide()
+  }, 200)
 })
