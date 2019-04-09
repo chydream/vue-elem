@@ -9,7 +9,14 @@ const router = new Router({
     {
       path: '/home',
       name: 'Home',
-      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/views/home/Home')
+      component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/layout/Index'),
+      children: [
+        {
+          path: 'index',
+          name: 'HomeIndex',
+          component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/views/home/Home')
+        }
+      ]
     },
     {
       path: '/',
@@ -41,7 +48,7 @@ router.beforeEach((to, from, next) => {
   })
   if (store.getters.mobileToken) {
     if (to.path == '/') {
-      next({path: '/home', replace: true})
+      next({path: '/home/index', replace: true})
       setTimeout(() => {
         Vue.$vux.loading.hide()
       }, 200)

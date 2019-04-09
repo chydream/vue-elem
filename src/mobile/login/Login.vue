@@ -40,7 +40,7 @@ export default {
           this.$store.dispatch('mobileUser/GetUserInfo', res.data.token).then(res => {
             // console.log(res)
             if (res.success) {
-              this.$router.push('/home')
+              this.$router.push('/home/index')
             }
           })
         } else {
