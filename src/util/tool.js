@@ -43,6 +43,16 @@ export function getArrIndex (arr, value) {
         }
     }
 }
+// 数组去重
+export function unique (arr) {
+    var newArr = []
+    for (var i = 0; i < arr.length; i++) {
+        if (newArr.indexOf(arr[i]) < 0) {
+            newArr.push(arr[i])
+        }
+    }
+    return newArr
+}
 // 全屏插件
 export const reqFullScreen = () => {
     if (document.documentElement.requestFullScreen) {
@@ -62,6 +72,7 @@ export const exitFullScreen = () => {
         document.mozCancelFullScreen()
     }
 }
+// 复制方法
 export function copayData () {
     var copy = document.getElementById('walletAddress')
     copy.select() // 选择对象
@@ -91,33 +102,18 @@ export function uploadImgFormData () {
     var fd = new FormData()
     fd.append('uploadFile', imgFiles)
 }
+// 动态获取根地址
 export function getUrlRoot () {
     var baseUrl = location.protocol + '//' + location.host
-//    var pattern = /(127)|(localhost)|(file)/;
-//    if (pattern.test(baseUrl)) {
-//        baseUrl = 'http://192.168.12.223:8878/fjhswl-server' 
-//    }
-    baseUrl = 'http://114.115.148.14:8763/fjhswl-server'
-//    baseUrl = 'http://192.168.12.223:8763/fjhswl-server' 
+    var pattern = /(127)|(localhost)|(file)/
+    if (pattern.test(baseUrl)) {
+        baseUrl = 'http://192.168.12.223:8878/fjhswl-server' 
+    } else {
+        baseUrl = 'http://114.115.148.14:8763/fjhswl-server'
+    }
     return baseUrl
 }
-export function refreshData () {
-    var self = this
-    self.getReChargeList(self.page, self.pageSize)
-    var wPow = document.getElementById('wPow')
-    var wBody = document.getElementById('wBody')
-    var wOffsetHeight = wBody.offsetHeight // scrollTop offsetHeight scrollHeight
-    var wOffsetTop = wBody.offsetTop
-    wPow.addEventListener('scroll', function (ev) {
-        var fitHeight = wOffsetTop - 50 + wOffsetHeight * (self.page - 1)
-        if (this.scrollTop > fitHeight) {
-            if (self.page < self.total) {
-                self.page += 1
-                self.getReChargeList(self.page, self.pageSize)
-            }
-        }
-    })
-}
+// 获取页面卷去的高度
 export function getScrollTop () {
     var scrollTop = 0
     if (document.documentElement && document.documentElement.scrollTop) {
@@ -127,6 +123,7 @@ export function getScrollTop () {
     }
     return scrollTop
 }
+// 获取页面客户端高度
 export function getClientHeight () {
     var clientHeight = 0
     if (document.body.clientHeight && document.documentElement.clientHeight) {
@@ -136,6 +133,7 @@ export function getClientHeight () {
     }
     return clientHeight
 }
+// 获取页面滚动高度
 export function getScrollHeight () {
     return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
 }
