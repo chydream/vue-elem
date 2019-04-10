@@ -1,2 +1,2 @@
-// import './pc.js'
-import './mobile.js'
+import './pc.js'
+// import './mobile.js'
