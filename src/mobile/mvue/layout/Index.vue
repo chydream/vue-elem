@@ -1,12 +1,17 @@
 <template>
-<div>
-   <div class="home-header">
-      <div>dddddddddd</div>
+<div class="layout">
+   <div class="layout-header">
+      <div>header</div>
       <span @click="logout">登出</span>
    </div>
-   <transition name="fade">
-      <router-view></router-view>
+   <div class="layout-main">
+    <transition name="fade">
+        <router-view></router-view>
     </transition>
+   </div>
+   <div class="layout-footer">
+      <div>footer</div>
+   </div>
 </div>
 </template>
 <script>
@@ -40,7 +45,10 @@ export default {
 </script>
 
 <style scoped lang="less">
-.home-header{
+.layout{
+  width: 100%;
+  height: 100%;
+  .layout-header{
     position: fixed;
     left: 0;
     top: 0;
@@ -48,10 +56,33 @@ export default {
     height: 40px;
     line-height: 40px;
     background: #f6f6f6;
-}
-.home-header span{
-    position: absolute;
-    right: 0;
-    top: 0;
+  }
+  .layout-header span{
+      position: absolute;
+      right: 0;
+      top: 0;
+  }
+  .layout-main{
+    padding: 40px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+  .layout-main>div{
+    width:100%;
+    height:100%;
+    overflow-y:auto;
+    box-sizing: border-box;
+  }
+  .layout-footer{
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      background: #f6f6f6;
+  }
 }
 </style>
