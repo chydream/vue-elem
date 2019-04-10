@@ -46,6 +46,7 @@ export default {
         }
     },
     created () {
+        this.setTitle('首页')
     },
     mounted () {
         this.refreshData()

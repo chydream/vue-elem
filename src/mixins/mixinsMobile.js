@@ -2,12 +2,14 @@ import CryptoJS from 'crypto-js'
 const mixinsFun = {
   data () {
     return {
-      
     }
   },
   created () {
   },
   methods: {
+    setTitle (title) {
+      this.$store.commit('mobileCommon/SET_TITLE', title)
+    },
     showToast (text, type) {
       this.$vux.toast.show({
         text: text,

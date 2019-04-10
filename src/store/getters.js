@@ -9,6 +9,7 @@ const getters = {
     keepAlive: state => state.common.keepAlive,
     keepAlivePage: state => state.common.keepAlivePage,
     keepAlivePath: state => state.common.keepAlivePath,
-    mobileToken: state => state.mobileUser.token
+    mobileToken: state => state.mobileUser.token,
+    title: state => state.mobileCommon.title
 }
 export default getters

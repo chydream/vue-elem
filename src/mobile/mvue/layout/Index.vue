@@ -1,7 +1,7 @@
 <template>
 <div class="layout">
    <div class="layout-header">
-      <div>header</div>
+      <div>{{title}}</div>
       <span @click="logout">登出</span>
    </div>
    <div class="layout-main">
@@ -15,7 +15,7 @@
 </div>
 </template>
 <script>
-
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
@@ -23,6 +23,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['title'])
   },
   created () {
   },
