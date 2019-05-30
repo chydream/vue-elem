@@ -53,6 +53,18 @@ export function unique (arr) {
     }
     return newArr
 }
+// 数组排序
+export function arrSort (arr, prop) {
+    function compare (property) {
+        return function (a, b) {
+            var value1 = a[property]
+            var value2 = b[property]
+            return value1 - value2
+        }
+    }
+    arr.sort(compare(prop))
+}
+
 // 全屏插件
 export const reqFullScreen = () => {
     if (document.documentElement.requestFullScreen) {
@@ -136,4 +148,14 @@ export function getClientHeight () {
 // 获取页面滚动高度
 export function getScrollHeight () {
     return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+}
+//附件下载方法 responseType:'blob'
+export function exportExcel (res) {
+    var fileName = res.headers['content-disposition'].split(";")[1].split("=")[1].split('.')[0]
+    var el = document.createElement("a")
+    document.body.appendChild(el)
+    el.style.display = "display:none"
+    el.download = fileName + '.xls'
+    el.href = URL.createObjectURL(res.data)
+    el.click()
 }

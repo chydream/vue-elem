@@ -15,6 +15,11 @@ const router = new Router({
           path: 'index',
           name: 'HomeIndex',
           component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/views/home/Home')
+        },
+        {
+          path: 'cal',
+          name: 'Cal',
+          component: () => import(/* webpackChunkName: "group-foo" */'@/mobile/mvue/views/cal/Cal')
         }
       ]
     },
