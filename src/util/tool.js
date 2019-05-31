@@ -149,12 +149,12 @@ export function getClientHeight () {
 export function getScrollHeight () {
     return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
 }
-//附件下载方法 responseType:'blob'
+// 附件下载方法 responseType:'blob'
 export function exportExcel (res) {
-    var fileName = res.headers['content-disposition'].split(";")[1].split("=")[1].split('.')[0]
-    var el = document.createElement("a")
+    var fileName = res.headers['content-disposition'].split(';')[1].split('=')[1].split('.')[0]
+    var el = document.createElement('a')
     document.body.appendChild(el)
-    el.style.display = "display:none"
+    el.style.display = 'display:none'
     el.download = fileName + '.xls'
     el.href = URL.createObjectURL(res.data)
     el.click()
